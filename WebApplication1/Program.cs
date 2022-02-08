@@ -15,6 +15,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = ApiKeyAuthOptions.DefaultScheme;
 }).AddApiKeyAuth(builder.Configuration.GetSection("Authentication").Bind);
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +27,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(o => {
+    o.AllowAnyOrigin();
+    o.AllowAnyHeader();
+    o.AllowAnyMethod();
+});
+
 
 app.UseAuthentication();
 app.UseAuthorization();

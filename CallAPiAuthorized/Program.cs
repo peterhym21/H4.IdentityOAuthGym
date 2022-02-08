@@ -6,9 +6,16 @@ using APIKey;
 
 HttpClient Http = new();
 
-WeatherForecast weatherForecast = await Http.GetFromJsonAsync<WeatherForecast>("https://localhost:7052/WeatherForecast?apikey=12345");
+List<WeatherForecast> weatherForecast = await Http.GetFromJsonAsync<List<WeatherForecast>>(requestUri: "https://localhost:7052/WeatherForecast?apikey=12345");
 
-Console.WriteLine(weatherForecast.Date);
-Console.WriteLine(weatherForecast.Summary);
-Console.WriteLine(weatherForecast.TemperatureC);
-Console.WriteLine(weatherForecast.TemperatureF);
+
+foreach (var itemForecast in weatherForecast)
+{
+    Console.WriteLine(itemForecast.Date);
+    Console.WriteLine(itemForecast.Summary);
+    Console.WriteLine(itemForecast.TemperatureC);
+    Console.WriteLine(itemForecast.TemperatureF);
+}
+
+
+Console.ReadLine();
